@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ETCH-A-SKETCH</title>
+	<style>
+		*{
+			box-sizing: border-box;
+			margin: 0;
+            padding: 0;
+		}
+		body{
+			text-align: center;
+			font-family: sans-serif;
+		}
+		.container {
+			display: grid;
+			grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
+			grid-gap:2px;
+			width:450px;
+            height:520px;
+			margin:30px auto;
+            margin-bottom: 0;
+            border:10px solid brown;
+            border-radius:10px;
+            background: #000;
+		}
+		.container div{
+			background: white;
+		}
+		.container div:hover{background: #999;}
+		button{
+			padding: 5px;
+			
+			border:2px solid transparent;
+			width:130px;
+			background: #f52;
+			color: white;
+			font-size:18px;
+			margin-top:5px;
+			border-radius: 20px;
+			outline: none;
+			cursor: pointer;
+		}
+		button:hover{
+			background: white;
+			color:#f52;
+			border:2px solid #f52;
+		}
+		h1{
+			color:#f52;
+			text-shadow:3px 3px 4px rgba(0,0,0,0.3);
+		}
+	</style>
+</head>
+<body>
+	<h1>ETCH-A-SKETCH</h1>
+	<button id="clear">Clear</button>
+	<button id="board">change grid</button>
+	<div class="container">
+		
+	</div>
+	<script type="text/javascript">
+		for(var i=0;i<16*16;i++){
+			document.getElementsByClassName("container")[0].appendChild(document.createElement("div"));
+		}
+		for(let i=0;i<document.querySelectorAll(".container div").length;i++){
+			document.querySelectorAll(".container div")[i].onmouseleave=function(){
+				if(document.querySelectorAll(".container div")[i].style.background==""){
+					var d=80,color="hsl("+(Math.floor(Math.random()*320))+","+100+"%,"+d+"%)";
+					document.querySelectorAll(".container div")[i].style.background=color;
+				}else{
+					var c=document.querySelectorAll(".container div")[i].style.background;
+						color=c.replace("rgb(","").replace(")","").split(",");
+						if(color[0]>80){
+							var r=color[0]-(color[0]/10),g=color[1]-(color[1]/10),b=color[2]-(color[2]/10);
+							c="rgb("+r+","+g+","+b+")";
+						}
+						document.querySelectorAll(".container div")[i].style.background=c;
+				}
+			}
+		}
+		document.getElementById("clear").onclick=function(){
+				for(var i=0;i<document.querySelectorAll(".container div").length;i++){
+					document.querySelectorAll(".container div")[i].style.background="";
+				}	
+			}
+		document.getElementById("board").onclick=function(){
+			var grid=prompt("how many squares per side you want?",16);
+			var child=document.getElementsByTagName("div"),many=child.length;
+			if(grid>50){grid=prompt("the grid should not be bigger than 50",50)}
+			for(var a=1;a<many;a++){
+				document.getElementsByClassName("container")[0].removeChild(child[1]);
+			}
+			document.getElementsByClassName("container")[0].style.gridTemplateColumns="";
+				for(var i=0;i<grid;i++){
+					document.getElementsByClassName("container")[0].style.gridTemplateColumns+=" auto"
+					for(var a=0;a<grid;a++){
+						document.getElementsByClassName("container")[0].appendChild(document.createElement("div"));
+					}
+				}
+				for(let i=0;i<document.querySelectorAll(".container div").length;i++){
+			document.querySelectorAll(".container div")[i].onmouseover=function(){
+				if(document.querySelectorAll(".container div")[i].style.background==""){
+					var d=80,color="hsl("+(Math.floor(Math.random()*320))+","+100+"%,"+d+"%)";
+					document.querySelectorAll(".container div")[i].style.background=color;
+				}else{
+					var c=document.querySelectorAll(".container div")[i].style.background;
+						color=c.replace("rgb(","").replace(")","").split(",");
+						if(color[0]>80){
+							var r=color[0]-(color[0]/10),g=color[1]-(color[1]/10),b=color[2]-(color[2]/10);
+							c="rgb("+r+","+g+","+b+")";
+						}
+						document.querySelectorAll(".container div")[i].style.background=c;
+				}
+				
+			}
+		}
+
+		}
+		
+	</script>
+	
+</body>
+</html>
